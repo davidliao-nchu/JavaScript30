@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+
+<script>
+  ;(function () {
+
+    window.addEventListener('keydown', keydownHandler) // keyup就不可作連續的觸發!
+    function keydownHandler(e){
+      // console.log(e.keyCode); // keyCode對應到上面的data-key
+
+      // 1. 播放聲音
+      const sound = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+      if (sound) { // 防止按到別的按鍵時產生錯誤的訊息
+        sound.currentTime = 0 // 要可連播(也必需是keydown)時，需加入此行於播放之前!!!
+        sound.play() // <audio>可直接play!!
+      }
+      
+      // 2. 增加playing屬性到對應之DOM
+      const key = document.querySelector(`div[data-key="${e.keyCode}"]`)
+      if (key) {
+        key.classList.add('playing')
+      }
+    }
+
+    // 3. 移除playing屬性，讓畫面恢復正常
+    document.querySelectorAll('.key').forEach(key => { // querySelectorAll回傳一個nodeList
+                                      // nodeList並非陣列，它沒有map，但有length與forEach!!!
+      key.addEventListener('transitionend', removePlaying) // 此例中transitionend有5個!!!
+    })
+    function removePlaying(e) {
+      // console.log(e);
+      if (e.propertyName === 'transform') { // 找任一個transitionend皆可…但通常找最後一個完成的!
+        // console.log(e.target);
+        e.target.classList.remove('playing')
+      }
+    }
+    
+  })();
+</script>
+
+</body>
+</html>

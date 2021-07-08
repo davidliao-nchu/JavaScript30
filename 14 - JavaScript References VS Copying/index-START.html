@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+</head>
+<body>
+
+  <script>
+    // start with strings, numbers and booleans //簡單資料型別都是 call by Value，會有不同的記憶體位置
+    let age = 100;
+    let age2 = age;
+    console.log(age, age2); //100 100
+    age = 200;
+    console.log(age, age2); //200 100
+
+    let name = 'Wes';
+    let name2 = name;
+    console.log(name, name2); //Wes Wes
+    name = 'wesley';
+    console.log(name, name2); //wesley Wes
+
+    // Let's say we have an array
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy']; //陣列、物件、函數 在JS中皆屬於 複雜資料型別
+
+    // and we want to make a copy of it.
+    let players2 = players; //其實並非 "copy"，因為它是 call by Reference !!! 所以指向同一個記憶體位置
+
+    // You might think we can just do something like this:
+    players2[3] = 'Lux'; //誤以為只改 players2 ...
+
+    // however what happens when we update that array?
+    console.log(players, players2); //其實皆為 ['Was','Sarah','Ryan','Lux']，因為只有一份資料!!!
+
+    // now here is the problem!
+    // oh no - we have edited the original array too!
+    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+    // So, how do we fix this? We take a copy instead!
+    // one way
+    let players3 = players.slice(); //用 slice 複製
+
+    // or create a new array and concat the old one in
+    let players4 = [].concat(players); //或用 concat 複製
+
+    // or use the new ES6 Spread
+    let players5 = [...players]; //或用 展開運算符 複製
+
+    // or even use Array.from
+    let players6 = Array.from(players); //甚至用 Array.from 複製
+
+    // now when we update it, the original one isn't changed.
+
+    // ===================================================================
+
+    // The same thing goes for objects, let's say we have a person object
+
+    // with Objects
+    const person = {
+      name: 'Wes Bos',
+      age: 80
+    };
+
+    // and think we make a copy: 
+    let person2 = person; //非複製，是 call by Reference
+    person2['age']= 100;
+    console.table(person);
+    console.table(person2);
+
+    // how do we take a copy instead? 
+    let person3 = Object.assign({}, person); //用 assign 複製
+    person3['age']= 60;
+    console.table(person);
+    console.table(person3);
+
+    // We will hopefully soon see the object ...spread
+    let person4 = {...person}; //或用 展開運算符 複製
+    console.table(person4);
+
+    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+    let wes = {
+      name: 'Wes',
+      age: 100,
+      social: {
+        twitter: '@wesbos',
+        facebook: 'wesbos.developer'
+      }
+    };
+
+    console.clear();
+    console.table(wes);
+
+    let wes2  = Object.assign({}, wes); //淺複製無法達到我們要的目標…
+    let wes3 = {...wes};
+
+    let wes4 = JSON.parse(JSON.stringify(wes)); //深複製才 okay !!!
+    wes4['social']['facebook'] = 'someone.developer';
+    console.table(wes);
+    console.table(wes4);
+
+  </script>
+
+</body>
+</html>

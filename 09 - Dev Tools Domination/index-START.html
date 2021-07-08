@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p class="demo" onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log('hello');
+
+    // Interpolated
+    console.log('I live in %s.', 'Taipei'); // %s 字串
+    console.log('I have %d books.', 7); // %d 整數
+    console.log('I have %f dollors.' , 7.8); // %f 浮點數
+
+    // Styled
+    console.log('%c Hello World', 'font-size:50px; color:white; background:green; text-shadow: 10px 10px 0 grey');
+
+    // warning!
+    console.warn('Warning!! Dont cross the yellow line.');
+
+    // Error :|
+    console.error('BOMB!!! You got an error.');
+
+    // Info
+    console.info('If it rains, you are better to take an umbrella.');
+
+    // Testing
+    let p = document.querySelector('p');
+    console.assert(p.classList.contains('ouch'), 'That is wrong!');
+    console.assert(p.classList.contains('demo'), 'That is wrong!');
+
+    // clearing
+    //console.clear();
+
+    // Viewing DOM Elements
+    console.log(p);
+    console.dir(p);
+
+    // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(dog.name);
+      console.log(`This is ${dog.name}.`);
+      console.log(`${dog.name} is ${dog.age} years old.`);
+      console.groupEnd(dog.name);
+    })
+
+    // counting
+    console.count('dog');
+    console.count('cat');
+    console.count('dog');
+    console.count('dog');
+    console.count('cat');
+    console.count('duck');
+    console.count('duck');
+    console.count('duck');
+    console.count('mice');
+
+    // timing
+    console.time('for loop time');
+    function sum(a, b, c) { return a+b+c; }  
+    for (let i=0; i<10000; i++) {
+      sum(1,2,3)
+    }
+    console.timeEnd('for loop time') // 5ms
+
+    console.time('柯里化 loop time');
+    function sum(a) {
+      return (b)=> {
+        return (c)=> {
+          return a+b+c;
+        }
+      }
+    }  
+    for (let i=0; i<10000; i++) {
+      sum(1)(2)(3);
+    }
+    console.timeEnd('柯里化 loop time') // 12ms, 效率奇差…!!!
+
+    // table
+    console.table(dogs);
+
+  </script>
+</body>
+</html>

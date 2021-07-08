@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+        <div class="circle"></div>
+      </div>
+    </div>
+
+
+  <style>
+    html {
+      background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .circle {
+      width: 10%;
+      height: 10%;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: calc(50% - 5%);
+      left: calc(50% - 5%);
+    }
+
+    .hand {
+      width: 8px;
+      height: 50%;
+      background: white;
+      position: absolute;
+      top: 0;
+      left: calc(50% - 4px);
+      transform-origin: 50% 100%;
+    }
+
+    .hour-hand {
+      height: 35%;
+      top: 15%;
+      /* transform: rotate(0deg); */
+    }
+
+    .min-hand {
+      width: 6px;
+      left: calc(50% - 3px);
+    }
+
+    .second-hand {
+      width: 6px;
+      background: red;
+      left: calc(50% - 3px);
+    }
+
+  </style>
+
+  <script>
+
+      let hourHand = document.querySelector('.hour-hand');
+      let minHand = document.querySelector('.min-hand');
+      let secHand = document.querySelector('.second-hand');
+
+      function setClock () {
+        let date = new Date();
+        let hDeg = date.getHours() * 30 + date.getMinutes() * 30 / 60;
+        let mDeg = date.getMinutes() * 6 + date.getSeconds() * 6 / 60;
+        let sDeg = date.getSeconds() * 6;
+
+        hourHand.style.transform = `rotate(${hDeg}deg)`;
+        minHand.style.transform = `rotate(${mDeg}deg)`;
+        secHand.style.transform = `rotate(${sDeg}deg)`;
+      }
+
+      setInterval(setClock, 1000);
+
+  </script>
+</body>
+</html>

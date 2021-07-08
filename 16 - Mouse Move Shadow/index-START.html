@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+  <style>
+    html {
+      color: black;
+      font-family: sans-serif;
+    }
+  
+    body {
+      margin: 0;
+    }
+  
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: black;
+    }
+  
+    h1 {
+      text-shadow: 10px 10px 0 rgba(0,0,0,1);
+      font-size: 100px;
+    }
+
+    .gray {
+      height: 800px;
+      background-color: gray;
+    }
+
+    #effect01 {
+      color: white; 
+      text-shadow: black 0.1em 0.1em 0.2em;
+      text-align: center;
+    }
+
+    #effect02 {
+      color: gray;
+      text-shadow: -1px -1px white, 1px 1px #333;
+      text-align: center;
+    }
+
+    #effect03 {
+      color: gray;
+      text-shadow: 1px 1px white, -1px -1px #444;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <h1 contenteditable>🔥WOAH!</h1>
+  </div>
+
+  <div class="gray">
+    <h1 id="effect01">展現文字陰影</h1>
+    <h1 id="effect02">文字外嵌效果</h1>
+    <h1 id="effect03">文字內嵌效果</h1>
+  </div>
+
+  <script>
+    let shadowElement = document.querySelector('h1');
+    window.addEventListener('mousemove', shadow);
+
+    function shadow(e) {
+        let mouseX = e.clientX; //取得當前滑鼠於頁面上的X座標
+        let mouseY = e.clientY; //取得當前滑鼠於頁面上的Y座標
+        let centerX = window.innerWidth / 2; //取得當前頁面上的中心點X座標
+        let centerY = window.innerHeight / 2; //取得當前頁面上的中心點Y座標
+        
+        //計算分身可移動的適當距離
+        let moveX = (mouseX - centerX) * .5;
+        let moveY = (mouseY - centerY) * .5;
+
+        //將 text-shadow 屬性值加給 <h1>
+        shadowElement.style.textShadow = `
+            ${moveX}px ${-moveY}px 0 rgba(255,0,255,0.7), 
+            ${-moveX}px ${moveY}px 0 rgba(0,255,255,0.7),
+            ${-moveY}px ${-moveX}px 0 rgba(0,255,0,0.7),
+            ${moveY}px ${moveX}px 0 rgba(0,0,255,0.7)`;
+    };
+  </script>
+</body>
+</html>

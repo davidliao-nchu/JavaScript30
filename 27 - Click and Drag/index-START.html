@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click and Drag</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="items">
+    <div class="item item1">01</div>
+    <div class="item item2">02</div>
+    <div class="item item3">03</div>
+    <div class="item item4">04</div>
+    <div class="item item5">05</div>
+    <div class="item item6">06</div>
+    <div class="item item7">07</div>
+    <div class="item item8">08</div>
+    <div class="item item9">09</div>
+    <div class="item item10">10</div>
+    <div class="item item11">11</div>
+    <div class="item item12">12</div>
+    <div class="item item13">13</div>
+    <div class="item item14">14</div>
+    <div class="item item15">15</div>
+    <div class="item item16">16</div>
+    <div class="item item17">17</div>
+    <div class="item item18">18</div>
+    <div class="item item19">19</div>
+    <div class="item item20">20</div>
+    <div class="item item21">21</div>
+    <div class="item item22">22</div>
+    <div class="item item23">23</div>
+    <div class="item item24">24</div>
+    <div class="item item25">25</div>
+  </div>
+
+<script>
+  ;(function () {
+
+    const slider = document.querySelector('.items')
+    let isDown = false
+    let startX // 就要找一個基準點而已!!!
+    let scrollLeft // 捲軸目前已滾動的距離
+
+    slider.addEventListener('mousedown', (e) => {
+      // console.log(e);
+      // console.log('e.pageX=', e.pageX,'; e.clientX=', e.clientX, '; e.offsetX=', e.offsetX);
+
+      isDown = true
+      slider.classList.add('active')
+
+      startX = e.screenX // 我們用此作基準點也是可行的…
+      // startX = e.pageX - slider.offsetLeft 
+      
+      scrollLeft = slider.scrollLeft // slider目前滾動了多少(同43行)
+    })
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return  // stop the fn from running
+      // e.preventDefault() // 作用???
+
+      const x = e.screenX // 用跟52行相同的來度量即可…
+      // const x = e.pageX - slider.offsetLeft 
+
+      const walk = (x - startX) * .5 // 後面的倍數可用來控制滾動的快慢
+      slider.scrollLeft = scrollLeft - walk // +/- 可控制滾動的方向
+    })
+
+    slider.addEventListener('mouseleave', () => {
+      isDown = false
+      slider.classList.remove('active')
+    })
+
+    slider.addEventListener('mouseup', () => {
+      isDown = false
+      slider.classList.remove('active')
+    })
+
+  })();
+</script>
+</body>
+</html>
