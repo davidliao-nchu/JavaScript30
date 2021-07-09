@@ -97,24 +97,25 @@
   </style>
 
   <script>
+    ;(function () {
 
-      let hourHand = document.querySelector('.hour-hand');
-      let minHand = document.querySelector('.min-hand');
-      let secHand = document.querySelector('.second-hand');
+      let hourHand = document.querySelector('.hour-hand')
+      let minHand = document.querySelector('.min-hand')
+      let secHand = document.querySelector('.second-hand')
 
       function setClock () {
-        let date = new Date();
-        let hDeg = date.getHours() * 30 + date.getMinutes() * 30 / 60;
-        let mDeg = date.getMinutes() * 6 + date.getSeconds() * 6 / 60;
-        let sDeg = date.getSeconds() * 6;
+        let date = new Date()
+        let hDeg = date.getHours() * 30 + date.getMinutes() * 30 / 60
+        let mDeg = date.getMinutes() * 6 + date.getSeconds() * 6 / 60
+        let sDeg = date.getSeconds() * 6
 
-        hourHand.style.transform = `rotate(${hDeg}deg)`;
-        minHand.style.transform = `rotate(${mDeg}deg)`;
-        secHand.style.transform = `rotate(${sDeg}deg)`;
+        hourHand.style.transform = `rotate(${hDeg}deg)`
+        minHand.style.transform = `rotate(${mDeg}deg)`
+        secHand.style.transform = `rotate(${sDeg}deg)`
       }
 
-      setInterval(setClock, 1000);
-
+      setInterval(setClock, 1000)
+    })();
   </script>
 </body>
 </html>
